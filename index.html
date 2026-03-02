@@ -31,7 +31,7 @@
             font-weight: 300;
         }
 
-        /* 極簡輸入框 */
+        /* 侘寂風格輸入框：僅保留底部細線 */
         input[type="text"], 
         input[type="email"], 
         textarea {
@@ -43,13 +43,14 @@
             outline: none;
             transition: border-color 0.4s ease;
             font-family: 'Noto Sans TC', sans-serif;
+            border-radius: 0;
         }
 
         input:focus, textarea:focus {
             border-bottom-color: var(--accent);
         }
 
-        /* 自定義 Radio 與 Checkbox */
+        /* 自定義選項樣式 */
         input[type="radio"], input[type="checkbox"] {
             appearance: none;
             border: 1px solid var(--line-color);
@@ -60,6 +61,7 @@
             display: inline-block;
             vertical-align: middle;
             transition: all 0.3s ease;
+            background-color: transparent;
         }
 
         input[type="radio"] { border-radius: 50%; }
@@ -70,47 +72,40 @@
             border-color: var(--accent);
         }
 
-        /* 留白與動畫 */
+        /* 佈局留白 */
         .section-spacing {
-            margin-bottom: 6rem;
+            margin-bottom: 7rem;
         }
 
         .fade-in {
-            animation: fadeIn 1.2s ease forwards;
+            animation: fadeIn 1.5s ease forwards;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .agenda-item {
-            display: grid;
-            grid-template-columns: 120px 1fr;
-            border-bottom: 0.5px solid var(--line-color);
-            padding: 1.5rem 0;
-        }
-
-        /* Loading 遮罩 */
-        #loading {
+        /* 讀取動畫遮罩 */
+        #loading-overlay {
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(249, 247, 242, 0.95);
+            background: rgba(249, 247, 242, 0.98);
             z-index: 100;
             align-items: center;
             justify-content: center;
             flex-direction: column;
         }
 
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 2px solid var(--line-color);
-            border-top: 2px solid var(--accent);
+        .zen-spinner {
+            width: 30px;
+            height: 30px;
+            border: 1px solid var(--line-color);
+            border-top: 1px solid var(--accent);
             border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 1rem;
+            animation: spin 1.2s linear infinite;
+            margin-bottom: 1.5rem;
         }
 
         @keyframes spin {
@@ -119,139 +114,136 @@
         }
 
         @media (max-width: 640px) {
-            .agenda-item {
-                grid-template-columns: 1fr;
-                gap: 0.5rem;
-            }
             .section-spacing {
-                margin-bottom: 4rem;
+                margin-bottom: 5rem;
             }
         }
     </style>
 </head>
-<body class="p-6 md:p-20">
+<body class="p-8 md:p-24">
 
-    <!-- 送出中的等待畫面 -->
-    <div id="loading">
-        <div class="spinner"></div>
-        <p class="sans text-xs tracking-widest opacity-60 uppercase">Processing / 處理中</p>
+    <!-- 送出中的靜謐等待畫面 -->
+    <div id="loading-overlay">
+        <div class="zen-spinner"></div>
+        <p class="sans text-[10px] tracking-[0.3em] opacity-40 uppercase">Connecting / 同步中</p>
     </div>
 
     <div class="max-w-3xl mx-auto fade-in">
         
         <!-- Header -->
         <header class="section-spacing">
-            <p class="sans text-xs uppercase tracking-widest mb-4 opacity-60">Workshop 2026</p>
-            <h1 class="text-3xl md:text-5xl font-medium mb-8 leading-tight">
+            <p class="sans text-[10px] uppercase tracking-[0.4em] mb-6 opacity-40">Spring Workshop 2026</p>
+            <h1 class="text-3xl md:text-5xl font-medium mb-10 leading-[1.3] text-zinc-800">
                 生成式 AI 驅動<br>
                 教學行政效率翻倍工作坊
             </h1>
-            <div class="sans text-sm md:text-base space-y-2 opacity-80">
-                <p>日期 — 2026 年 03 月 14 日 (週六)</p>
+            <div class="sans text-sm md:text-base space-y-3 opacity-70 font-light">
+                <p>日期 — 2026 年 03 月 14 日</p>
                 <p>時間 — 14:00 - 17:00</p>
                 <p>地點 — 第五醫療大樓 5F 552 會議室</p>
             </div>
         </header>
 
-        <!-- Registration Form -->
+        <!-- Form Section -->
         <section class="section-spacing">
-            <h2 class="text-xs uppercase tracking-widest mb-10 opacity-60">報名資料填寫</h2>
+            <h2 class="text-[10px] uppercase tracking-[0.3em] mb-12 opacity-30">Registration / 報名填寫</h2>
             
-            <form id="registrationForm" class="space-y-12">
+            <form id="registrationForm" class="space-y-16">
                 
-                <!-- Basic Info -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <!-- 個人基礎資料 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-12">
                     <div class="space-y-2">
-                        <label class="text-xs opacity-50">姓名</label>
-                        <input type="text" name="name" required placeholder="請輸入姓名">
+                        <label class="text-[10px] uppercase tracking-widest opacity-40">姓名</label>
+                        <input type="text" name="name" required placeholder="Name">
                     </div>
                     <div class="space-y-2">
-                        <label class="text-xs opacity-50">電子郵件 (Email)</label>
-                        <input type="email" name="email" required placeholder="email@example.com">
+                        <label class="text-[10px] uppercase tracking-widest opacity-40">電子郵件 (Email)</label>
+                        <input type="email" name="email" required placeholder="Email Address">
                     </div>
                     <div class="space-y-2">
-                        <label class="text-xs opacity-50">單位</label>
-                        <input type="text" name="department" required placeholder="所屬部門">
+                        <label class="text-[10px] uppercase tracking-widest opacity-40">單位</label>
+                        <input type="text" name="department" required placeholder="Department">
                     </div>
-                    <div class="space-y-2">
-                        <label class="text-xs opacity-50">職稱</label>
-                        <div class="pt-2 flex flex-wrap gap-4 text-sm sans">
-                            <label><input type="radio" name="title" value="醫師" required> 醫師</label>
-                            <label><input type="radio" name="title" value="護理師"> 護理師</label>
-                            <label><input type="radio" name="title" value="醫事人員"> 醫事</label>
-                            <label><input type="radio" name="title" value="行政人員"> 行政</label>
+                    <div class="space-y-4">
+                        <label class="text-[10px] uppercase tracking-widest opacity-40">職稱</label>
+                        <div class="pt-1 flex flex-wrap gap-x-6 gap-y-3 text-sm sans font-light">
+                            <label class="flex items-center"><input type="radio" name="title" value="醫師" required> 醫師</label>
+                            <label class="flex items-center"><input type="radio" name="title" value="護理師"> 護理師</label>
+                            <label class="flex items-center"><input type="radio" name="title" value="醫事人員"> 醫事</label>
+                            <label class="flex items-center"><input type="radio" name="title" value="行政人員"> 行政</label>
                         </div>
                     </div>
                 </div>
 
                 <div class="space-y-4">
-                    <label class="text-xs opacity-50">是否需要茶水點心？</label>
-                    <div class="flex gap-8 text-sm sans">
-                        <label><input type="radio" name="snack" value="是" required> 是</label>
-                        <label><input type="radio" name="snack" value="否"> 否</label>
+                    <label class="text-[10px] uppercase tracking-widest opacity-40">是否需要茶水點心？</label>
+                    <div class="flex gap-10 text-sm sans font-light">
+                        <label class="flex items-center"><input type="radio" name="snack" value="是" required> 是</label>
+                        <label class="flex items-center"><input type="radio" name="snack" value="否"> 否</label>
                     </div>
                 </div>
 
-                <hr class="border-t-[0.5px] border-[#D1CEC7]">
+                <div class="w-20 border-t border-zinc-200"></div>
 
-                <!-- AI Survey -->
-                <div class="space-y-8">
-                    <div class="space-y-4">
-                        <label class="block font-medium">目前的 AI 工具使用頻率？</label>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm sans">
-                            <label><input type="radio" name="freq" value="重度使用者" required> 重度使用者 (每天)</label>
-                            <label><input type="radio" name="freq" value="中度使用者"> 中度使用者 (每週 2-3 次)</label>
-                            <label><input type="radio" name="freq" value="輕度使用者"> 輕度使用者 (偶爾)</label>
-                            <label><input type="radio" name="freq" value="新手"> 新手 (聽過但未用過)</label>
+                <!-- AI 需求調查 -->
+                <div class="space-y-12">
+                    <div class="space-y-6">
+                        <label class="block font-medium text-lg">您目前的 AI 工具使用頻率？</label>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm sans font-light">
+                            <label class="flex items-center"><input type="radio" name="freq" value="重度使用者" required> 重度使用者 (每天使用)</label>
+                            <label class="flex items-center"><input type="radio" name="freq" value="中度使用者"> 中度使用者 (每週 2-3 次)</label>
+                            <label class="flex items-center"><input type="radio" name="freq" value="輕度使用者"> 輕度使用者 (偶爾使用)</label>
+                            <label class="flex items-center"><input type="radio" name="freq" value="新手"> 新手 (聽過但未曾使用)</label>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6">
+                        <label class="block font-medium text-lg">曾經嘗試過的生成式 AI 工具？ (可多選)</label>
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm sans font-light">
+                            <label class="flex items-center"><input type="checkbox" name="tools" value="ChatGPT"> ChatGPT</label>
+                            <label class="flex items-center"><input type="checkbox" name="tools" value="Gemini"> Gemini</label>
+                            <label class="flex items-center"><input type="checkbox" name="tools" value="Copilot"> Copilot</label>
+                            <label class="flex items-center"><input type="checkbox" name="tools" value="Midjourney/DALL-E"> 繪圖類工具</label>
+                            <label class="flex items-center"><input type="checkbox" name="tools" value="NotionAI/Grammarly"> 寫作輔助</label>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6">
+                        <label class="block font-medium text-lg">將 AI 應用在工作上的信心分數？ (1-5)</label>
+                        <div class="flex gap-8">
+                            <label class="flex flex-col items-center gap-3 text-xs sans opacity-50"><input type="radio" name="confidence" value="1" required> 1</label>
+                            <label class="flex flex-col items-center gap-3 text-xs sans opacity-50"><input type="radio" name="confidence" value="2"> 2</label>
+                            <label class="flex flex-col items-center gap-3 text-xs sans opacity-50"><input type="radio" name="confidence" value="3"> 3</label>
+                            <label class="flex flex-col items-center gap-3 text-xs sans opacity-50"><input type="radio" name="confidence" value="4"> 4</label>
+                            <label class="flex flex-col items-center gap-3 text-xs sans opacity-50"><input type="radio" name="confidence" value="5"> 5</label>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6">
+                        <label class="block font-medium text-lg">您最希望解決的行政痛點？ (至多選 2 項)</label>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm sans font-light">
+                            <label class="flex items-center"><input type="checkbox" name="pains" value="文案撰寫"> 文案撰寫 (公文/潤飾)</label>
+                            <label class="flex items-center"><input type="checkbox" name="pains" value="會議記錄"> 會議記錄 (摘要整理)</label>
+                            <label class="flex items-center"><input type="checkbox" name="pains" value="數據處理"> 數據處理 (Excel/分析)</label>
+                            <label class="flex items-center"><input type="checkbox" name="pains" value="簡報製作"> 簡報製作 (大綱排版)</label>
+                            <label class="flex items-center"><input type="checkbox" name="pains" value="資訊檢索"> 資訊檢索 (法規/文獻)</label>
                         </div>
                     </div>
 
                     <div class="space-y-4">
-                        <label class="block font-medium">曾經嘗試過的生成式 AI 工具？ (多選)</label>
-                        <div class="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm sans">
-                            <label><input type="checkbox" name="tools" value="ChatGPT"> ChatGPT</label>
-                            <label><input type="checkbox" name="tools" value="Gemini"> Gemini</label>
-                            <label><input type="checkbox" name="tools" value="Copilot"> Copilot</label>
-                            <label><input type="checkbox" name="tools" value="Midjourney/DALL-E"> 繪圖類</label>
-                            <label><input type="checkbox" name="tools" value="NotionAI/Grammarly"> 寫作輔助</label>
-                        </div>
-                    </div>
-
-                    <div class="space-y-4">
-                        <label class="block font-medium">將 AI 應用在工作上的信心分數？ (1-5)</label>
-                        <div class="flex gap-4 md:gap-8">
-                            <label class="flex flex-col items-center gap-2 text-xs sans opacity-60"><input type="radio" name="confidence" value="1" required> 1</label>
-                            <label class="flex flex-col items-center gap-2 text-xs sans opacity-60"><input type="radio" name="confidence" value="2"> 2</label>
-                            <label class="flex flex-col items-center gap-2 text-xs sans opacity-60"><input type="radio" name="confidence" value="3"> 3</label>
-                            <label class="flex flex-col items-center gap-2 text-xs sans opacity-60"><input type="radio" name="confidence" value="4"> 4</label>
-                            <label class="flex flex-col items-center gap-2 text-xs sans opacity-60"><input type="radio" name="confidence" value="5"> 5</label>
-                        </div>
-                    </div>
-
-                    <div class="space-y-4">
-                        <label class="block font-medium">最希望解決的行政痛點？ (至多選 2 項)</label>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm sans">
-                            <label><input type="checkbox" name="pains" value="文案撰寫"> 文案撰寫 (公文/信件)</label>
-                            <label><input type="checkbox" name="pains" value="會議記錄"> 會議記錄 (整理/摘要)</label>
-                            <label><input type="checkbox" name="pains" value="數據處理"> 數據處理 (Excel/分析)</label>
-                            <label><input type="checkbox" name="pains" value="簡報製作"> 簡報製作 (大綱/排版)</label>
-                            <label><input type="checkbox" name="pains" value="資訊檢索"> 資訊檢索 (法規/文獻)</label>
-                        </div>
-                    </div>
-
-                    <div class="space-y-2">
-                        <label class="text-xs opacity-50">會前補充 / 想對講師說的話</label>
-                        <textarea name="comment" rows="3" placeholder="請填寫您的困難或期待..."></textarea>
+                        <label class="text-[10px] uppercase tracking-widest opacity-40">會前補充 / 想對講師說的話</label>
+                        <textarea name="comment" rows="3" placeholder="Additional thoughts or difficulties..."></textarea>
                     </div>
                 </div>
 
                 <!-- Submit Button -->
-                <div class="pt-10">
-                    <button type="submit" id="submitBtn" class="w-full md:w-auto px-16 py-4 bg-black text-white text-sm tracking-widest uppercase hover:bg-zinc-800 transition-all duration-300">
+                <div class="pt-12">
+                    <button type="submit" id="submitBtn" class="w-full md:w-auto px-20 py-5 bg-black text-white text-[10px] tracking-[0.4em] uppercase hover:bg-zinc-800 transition-all duration-500 ease-in-out">
                         確認送出報名
                     </button>
-                    <p class="sans text-[10px] mt-6 opacity-40 text-center md:text-left">
-                        本報名資料僅供本次研討會聯繫與餐點統計使用。
+                    <p class="sans text-[9px] mt-8 opacity-30 text-center md:text-left leading-relaxed">
+                        本報名資料僅供本次研討會聯繫與餐點統計使用。<br>
+                        Wabi-Sabi Aesthetics &reg; 2026.
                     </p>
                 </div>
 
@@ -259,15 +251,15 @@
         </section>
 
         <!-- Footer -->
-        <footer class="mt-40 border-t-[0.5px] border-[#D1CEC7] pt-12 pb-20">
-            <div class="flex flex-col md:flex-row justify-between items-start gap-8">
-                <div>
-                    <p class="text-sm font-bold">奇美醫院教學部</p>
-                    <p class="sans text-xs opacity-50 mt-1">Chi Mei Medical Center, Education Department</p>
+        <footer class="mt-48 border-t border-zinc-200 pt-16 pb-24">
+            <div class="flex flex-col md:flex-row justify-between items-start gap-12">
+                <div class="space-y-2">
+                    <p class="text-sm font-medium tracking-widest">奇美醫院教學部</p>
+                    <p class="sans text-[10px] opacity-40 uppercase tracking-tighter">Department of Medical Education, CMMC</p>
                 </div>
-                <div class="sans text-xs space-y-1 opacity-60">
+                <div class="sans text-[10px] space-y-2 opacity-40 tracking-widest text-right">
                     <p>聯絡人：盧英云 (分機 57425)</p>
-                    <p>&copy; 2026 AI Workflow Workshop</p>
+                    <p>Location: 5F, 552 Meeting Room</p>
                 </div>
             </div>
         </footer>
@@ -275,19 +267,19 @@
     </div>
 
     <script>
-        // Apps Script 網址
+        // 設定 Apps Script 網頁應用程式網址
         const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx_l3b9IgruXKd_RVEayFhUIAsd-TXy2p202U0gN3SQvThpw--NW8xeUO-MDRZ2d7MM/exec";
 
         const form = document.getElementById('registrationForm');
-        const loading = document.getElementById('loading');
-        const submitBtn = document.getElementById('submitBtn');
+        const overlay = document.getElementById('loading-overlay');
+        const btn = document.getElementById('submitBtn');
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            // 顯示載入動畫
-            loading.style.display = 'flex';
-            submitBtn.disabled = true;
+            // 顯示載入遮罩並鎖定按鈕
+            overlay.style.display = 'flex';
+            btn.disabled = true;
 
             const formData = new FormData(form);
             
@@ -309,39 +301,40 @@
             };
 
             try {
-                // 使用 fetch POST 資料
+                // 發送 POST 請求至 GAS
                 await fetch(WEB_APP_URL, {
                     method: 'POST',
-                    mode: 'no-cors', // 跨域請求常用模式
+                    mode: 'no-cors',
                     cache: 'no-cache',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
 
-                // 成功處理
-                loading.style.display = 'none';
-                alert('報名資料已成功傳送至試算表，謝謝您的參與。');
-                form.reset();
-                submitBtn.disabled = false;
+                // 模擬處理時間增加儀式感
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                    alert('報名資料已成功同步。期待在靜謐的午後與您相見。');
+                    form.reset();
+                    btn.disabled = false;
+                }, 1000);
 
             } catch (error) {
-                loading.style.display = 'none';
-                submitBtn.disabled = false;
-                console.error('Error:', error);
-                alert('送出失敗，請確認網路連線或 Apps Script 權限設定。');
+                overlay.style.display = 'none';
+                btn.disabled = false;
+                console.error('Submission Error:', error);
+                alert('傳送過程中發生錯誤，請檢查您的網路連線或稍後再試。');
             }
         });
 
-        // 限制痛點選擇數量 (最多 2 項)
+        // 限制痛點選擇數量：最多兩項
         const painCheckboxes = document.querySelectorAll('input[name="pains"]');
         painCheckboxes.forEach(cb => {
             cb.addEventListener('change', () => {
-                const checked = document.querySelectorAll('input[name="pains"]:checked');
-                if (checked.length > 2) {
+                const checkedCount = document.querySelectorAll('input[name="pains"]:checked').length;
+                if (checkedCount > 2) {
                     cb.checked = false;
-                    alert('最多僅能選擇 2 項痛點。');
+                    // 自定義提醒
+                    console.log('最多僅能選擇兩項主要痛點。');
                 }
             });
         });
